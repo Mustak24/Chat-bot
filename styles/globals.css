@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+#__next{
+  margin: 0%; padding: 0%;
+  *{
+    box-sizing: border-box;
+    &::after{content: ''; position: absolute;}
+    &::before{content: ''; position: absolute;}
+  }
+}
+
+.center{
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+.animate_comeFromDown{
+  animation: comeFromDown .5s reverse;
+}
+
+@keyframes comeFromDown{
+  100%{opacity: 0;}
+}
