@@ -10,6 +10,12 @@ export default async function (req, res) {
     model: "gemini-1.5-flash",
   });
   const chatSession = model.startChat();
-  let result = await chatSession.sendMessage(req.query.msg);
-  res.send({ res: result.response.text() })
+  try{
+
+    let result = await chatSession.sendMessage(req.query.msg);
+    res.send({ res: result.response.text() })
+  } catch(e){
+    console.log(e);
+    res.send({res: navigator.onLine?'Some internal serval comes !!!':'you are offline connect to Internet !!!'})
+  }
 }

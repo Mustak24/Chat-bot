@@ -2,18 +2,33 @@ import Navbar from "@/Components/Navbar"
 import { use, useEffect, useState } from "react"
 import Link from "next/link"
 import Head from "next/head"
+import { Card01 } from "@/Components/Chatbox"
+import { Dustbin } from "@/Components/Img"
 
 export default function Chats() {
     const [chats, setChats] = useState([])
     const [newChat, setChat] = useState('')
 
-    useEffect(() => {
-        fetch(`http://${window.location.host}/api/chat/getallchat`)
+    function re(){
+        fetch(`${window.location.origin}/api/chat/getallchat`)
             .then((chat) => chat.json())
             .then((chat) => setChats(chat))
+    }
+
+    useEffect(() => {
+        re();
         console.log(chats)
     }, [])
 
+    async function deleteChat(chatName){
+        let res = await fetch(`${window.location.origin}/api/chat/delete`, {
+            method: 'post',
+            body: JSON.stringify({chatName}),
+            headers: {'content-type': 'application/json'}
+        })
+        console.log(res);
+        re();
+    }
 
     return (<>
         <Head>
@@ -31,7 +46,14 @@ export default function Chats() {
                 <div className="w-full relative h-full max-sm:flex-col flex flex-wrap gap-[20px] p-10">
                     {chats.map((e) => {
                         return (
-                            <Link key={e} href={`chats/${e}`} className="border-2 w-[250px] h-[80px] rounded-full center text-white">{e}</Link>
+                            <div key={e} className="center w-fit overflow-hidden rounded-[15px]"> 
+                                <Link href={`chats/${e}`}>
+                                    <Card01 title={e} dec="about college bot, for software enggiring project file" /> 
+                                </Link>
+                                <button onClick={()=>deleteChat(e)} className="size-[20px] transition-all duration-50 active:scale-95 hover:scale-[1.1] absolute top-2 right-2 before:size-1 before:bg-red-500 before:opacity-30 before:right-[-10px] before:top-[-10px] before:rounded-full hover:before:shadow-[0_0_100px_30px_red]">
+                                    <Dustbin color='E94F4F'/>
+                                </button>
+                            </div>
                         )
                     })}
                 </div>

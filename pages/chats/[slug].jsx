@@ -7,37 +7,41 @@ import Head from "next/head";
 
 export default function ChatBot() {
     const [chat, setChat] = useState([])
-    const name = useRouter().query.slug
+    const name = useRouter().query.slug 
 
-    useMemo(() => {
-        fetch(`http://${window.location.host}/api/chat/getchat`, {
+    useEffect(() => {
+        fetch(`${window.location.origin}/api/chat/getchat`, {
             method: 'post',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ name })
         }).then((chat) => chat.json()).then((chat) => setChat(chat))
-    }, [])
+    }, []);
 
     async function saveChat(chats) {
-        let res = await fetch(`http://${window.location.host}/api/chat/saveChat`, {
+        let res = await fetch(`${window.location.origin}/api/chat/saveChat`, {
             method: 'post',
             headers: { 'content-Type': 'application/json' },
             body: JSON.stringify({ name, chats })
-        })
+        });
         console.log(await res.json())
     }
 
     const callApi = async () => {
         let msg = document.getElementById('msg').value
         setChat([...chat, { msg, pos: 'end' }])
-        if (!msg) {
-            setChat((chat) => [...chat, { msg: 'Please provide me some content !!! ', pos: 'start' }]);
-            return saveChat()
+        if (!msg) {   
+            setChat([...chat, { msg, pos: 'end' }, { msg: <Loading />, pos: 'start' }])
+            setTimeout(()=>setChat([...chat, { msg, pos: 'end' }, { msg: 'Please provide me some content !!! ', pos: 'start' }]),1000)
+            return saveChat([...chat, { msg, pos: 'end' }, { msg: 'Please provide me some content !!! ', pos: 'start' }]);
         }
+
         let loading = setTimeout(() => {
             setChat([...chat, { msg, pos: 'end' }, { msg: <Loading />, pos: 'start' }])
         }, 500);
-        let res = await fetch(`http://${window.location.host}/api/gemini/${msg}`)
+
+        let res = await fetch(`${window.location.origin}/api/gemini/${msg}`)
         res = await res.json()
+
         clearTimeout(loading);
         setChat([...chat, { msg, pos: 'end' }, { msg: res.res, pos: 'start' }])
         return saveChat([...chat, { msg, pos: 'end' }, { msg: res.res, pos: 'start' }]);
@@ -46,7 +50,7 @@ export default function ChatBot() {
     useEffect(() => {
         let msgBox = document.getElementById('chatBox')
         msgBox.scroll({ top: msgBox.scrollHeight, behavior: 'smooth' })
-    }, [chat])
+    }, [chat]);
 
     
 

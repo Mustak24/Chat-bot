@@ -11,9 +11,9 @@
   "dependencies": {
     "@google/generative-ai": "^0.19.0",
     "@next/swc-win32-x64-msvc": "^14.2.11",
-    "next": "14.2.11",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "^14.2.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^20",
