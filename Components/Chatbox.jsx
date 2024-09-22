@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function (props: { msg: string; pos: string }) {
+export default function Chatbox(props) {
   return (
     <>
       <pre
@@ -36,7 +36,7 @@ export function Loading() {
   );
 }
 
-export function Card01(props: { title: string; dec: string }) {
+export function Card01(props) {
   const [iscardHover, setcardHover] = useState(false);
   return (
     <>
@@ -57,7 +57,9 @@ export function Card01(props: { title: string; dec: string }) {
             className="text-gray-400 text-sm transition-all duration-300"
             style={{ transform: `translateX(${iscardHover ? 3 : 0}px)` }}
           >
-            {props.dec.length<40?props.dec:props.dec.slice(0,40) + ' ...'}
+            {props.dec.length < 40
+              ? props.dec
+              : props.dec.slice(0, 40) + " ..."}
           </p>
         </div>
       </div>

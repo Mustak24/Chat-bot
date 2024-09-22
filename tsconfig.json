@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/gemini/[msg].js", "pages/chat-bot.jsx", "pages/chats/[slug].jsx", "pages/chats.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/gemini/[msg].js", "pages/chat-bot.jsx", "pages/chats/[slug].jsx", "pages/chats.jsx", "Components/Chatbox.jsx"],
   "exclude": ["node_modules"]
 }
